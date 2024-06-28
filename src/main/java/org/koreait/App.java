@@ -30,6 +30,8 @@ public class App {
             else if (cmd.equals("list")) motivationController.list();
             else if (cmd.equals("help")) motivationController.help();
             else if (cmd.equals("delete")) motivationController.deleteMotivation();
+            else if (cmd.startsWith("delete?id=")) motivationController.deleteMotivation(cmd);
+            else if (cmd.equals("update")) motivationController.updateMotivation();
             else motivationController.notice(2);
         }
     }
