@@ -1,16 +1,15 @@
-package org.koreait;
+package org.koreait.motivation.entity;
 
 public class Motivation {
     private int myId;
     private String body;
+    private String source;
 
     public int getMyId() {
         return myId;
     }
 
-    private String source;
-
-    Motivation(int myId, String body, String source) {
+    public Motivation(int myId, String body, String source) {
         this.myId = myId;
         this.body = body;
         this.source = source;
