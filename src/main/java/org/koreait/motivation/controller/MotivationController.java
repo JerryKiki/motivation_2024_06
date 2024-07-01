@@ -17,7 +17,7 @@ public class MotivationController {
         this.motivations = new HashMap<>();
     }
 
-    public void updateMotivation() {
+    public void editMotivation() {
         if (this.motivations.isEmpty()) {
             System.out.println("등록된 motivation이 없어 수정할 수 없습니다.");
             System.out.println("등록을 원하신다면 command에 add를 입력해주세요.");
@@ -26,15 +26,38 @@ public class MotivationController {
             int willUpdate = getUsersInt(1);
             if (!motivations.containsKey(willUpdate)) System.out.printf("%d번 motivation은 존재하지 않습니다.\n", willUpdate);
             else {
-                System.out.printf("%d번 motivation을 수정합니다.\n", willUpdate);
-                System.out.print("body : ");
-                String body = Container.getScanner().nextLine();
-                System.out.print("source : ");
-                String source = Container.getScanner().nextLine();
-                motivations.put(willUpdate, new Motivation(willUpdate, body, source));
-                System.out.printf("%d번 motivation이 수정되었습니다.\n", willUpdate);
+                setNewMotivation(willUpdate);
             }
         }
+    }
+
+    public void editMotivation(String cmd) {
+        if (this.motivations.isEmpty()) {
+            System.out.println("등록된 motivation이 없어 수정할 수 없습니다.");
+            System.out.println("등록을 원하신다면 command에 add를 입력해주세요.");
+            System.out.println("그 외의 명령어가 궁금하시다면, command에 help를 입력해주세요.");
+        } else {
+            int willUpdate = Integer.parseInt(cmd.substring(10));
+            if (!motivations.containsKey(willUpdate)) System.out.printf("%d번 motivation은 존재하지 않습니다.\n", willUpdate);
+            else {
+                setNewMotivation(willUpdate);
+            }
+        }
+    }
+
+    public void setNewMotivation(int willUpdate) {
+        Motivation updateMotivation = motivations.get(willUpdate);
+        System.out.printf("%d번 motivation을 수정합니다.\n", willUpdate);
+        System.out.println("body(기존) : " + updateMotivation.getBody());
+        System.out.println("source(기존) : " + updateMotivation.getSource());
+        System.out.println("수정하실 내용을 입력해주세요.");
+        System.out.print("body : ");
+        String newBody = Container.getScanner().nextLine();
+        System.out.print("source : ");
+        String newSource = Container.getScanner().nextLine();
+        updateMotivation.setBody(newBody);
+        updateMotivation.setSource(newSource);
+        System.out.printf("%d번 motivation이 수정되었습니다.\n", willUpdate);
     }
 
     public void deleteMotivation() {
@@ -133,6 +156,8 @@ public class MotivationController {
         System.out.println("list : 등록된 motivation의 목록을 불러옵니다.");
         System.out.println("delete : 등록된 motivation을 id 넘버를 통해 삭제합니다.");
         System.out.println("delete?id=(id) : (id)에 id값을 바로 넣어주세요. 해당 motivation을 바로 삭제합니다.");
+        System.out.println("edit : 등록된 motivation을 id 넘버를 통해 수정합니다.");
+        System.out.println("edit?id=(id) : (id)에 id값을 바로 넣어주세요. 해당 motivation을 바로 수정합니다.");
         System.out.println("exit : motivation app을 종료합니다.");
     }
 
@@ -148,8 +173,6 @@ public class MotivationController {
                 break;
         }
     }
-
-
 
     public int getUsersInt(int delOrUp) {
         int usersInt;
